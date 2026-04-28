@@ -60,12 +60,16 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.container-card:hover {
-  transform: translateY(-5px);
-  border-color: #00d9ff;
-  box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+.container-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
 .container-name {
@@ -73,6 +77,19 @@ body {
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: #00d9ff;
+}
+
+.container-image {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.container-card:hover {
+  transform: translateY(-5px);
+  border-color: #00d9ff;
+  box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
 }
 
 .container-id {
