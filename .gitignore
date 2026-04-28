@@ -1,34 +1,19 @@
 ```
-# Dependencies
-node_modules/
-__pycache__/
-*.pyc
-.venv/
-venv/
-
 # Build artifacts
+static/
 dist/
 build/
-target/
+*.css
+*.js
+*.html
+
+# Dependencies
+node_modules/
 
 # Environment
 .env
 .env.local
 *.env.*
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# Logs
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
 
 # Python
 __pycache__/
@@ -36,20 +21,31 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
-*.so
+env/
+venv/
+.venv/
+.ENV
 
-# Docker
-.dockerenv
-!Dockerfile
-!docker-compose.yml
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
 
 # Coverage
-.coverage
 coverage/
 htmlcov/
+.coverage
 
-# Cache
-.mypy_cache/
+# Testing
 .pytest_cache/
-.gradle/
+.mypy_cache/
 ```
