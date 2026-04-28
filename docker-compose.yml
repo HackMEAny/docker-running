@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # Single service: React + Flask combined
+  docker-containers-ui:
+    build: .
+    image: docker-containers-ui:latest
+    container_name: docker-containers-ui
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "5000:5000"
+    networks:
+      - containers-network
+    restart: unless-stopped
+
+networks:
+  containers-network:
+    driver: bridge
