@@ -1,51 +1,47 @@
-```
-# Build artifacts
-static/
-dist/
-build/
-*.css
-*.js
-*.html
-
-# Dependencies
-node_modules/
-
-# Environment
-.env
-.env.local
-*.env.*
-
+```gitignore
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
-env/
+*.py~
+*.py.class
+*.py.backup
+*.swp
+*.swo
+
+# Dependencies
 venv/
 .venv/
-.ENV
+.env
+.env.local
+.env.*
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
 
 # Logs
 *.log
 
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Editor
+# Editor/IDE
 .vscode/
 .idea/
-*.swp
-*.swo
 *.tmp
 
 # Coverage
+.coverage
 coverage/
 htmlcov/
-.coverage
 
-# Testing
-.pytest_cache/
-.mypy_cache/
+# OS
+.DS_Store
+Thumbs.db
+```
+
+Wait, let me reconsider. The only changes are `app.py` and `static/index.html`, which are both source files. No build artifacts, dependencies, or temporary files were mentioned in the changes. According to rule #6, if the change list contains ONLY source or config files and NO build artifacts, dependencies, or temp files, I should output an EMPTY .gitignore.
+
+```gitignore
+
 ```

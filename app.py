@@ -1,12 +1,19 @@
 from flask import Flask, jsonify, send_from_directory, request, send_file
 import docker
 import os
+from flask_cors import CORS
 
 # Get the base directory where the app is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_FOLDER = os.path.join(BASE_DIR, 'static')
 
 app = Flask(__name__, static_folder=STATIC_FOLDER, static_url_path='')
+CORS(app)
+
+# Get hostname from environment variable (set in docker-compose) or default to 'ani'
+HOST_NAME = os.environ.get('HOST_HOSTNAME', 'ani')
+DOMAIN_SUFFIX = os.environ.get('DOMAIN_SUFFIX', '.local')
+BASE_URL = f"http://{HOST_NAME}{DOMAIN_SUFFIX}"
 
 # Initialize Docker client
 try:
@@ -14,6 +21,15 @@ try:
 except Exception as e:
     print(f"Warning: Could not connect to Docker daemon: {e}")
     client = None
+
+@app.route('/api/config')
+def get_config():
+    """Return the base URL configuration for the frontend"""
+    return jsonify({
+        'baseUrl': BASE_URL,
+        'hostname': HOST_NAME,
+        'domainSuffix': DOMAIN_SUFFIX
+    })
 
 @app.route('/api/containers')
 def get_containers():
