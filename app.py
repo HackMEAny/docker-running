@@ -42,6 +42,17 @@ def get_containers():
         
         container_list = []
         for container in containers:
+            # Extract clean image name for icon lookup
+            image_tags = container.image.tags
+            full_image_name = image_tags[0] if image_tags else 'unknown'
+            
+            # Clean up the image name (remove registry prefix and tag)
+            # e.g., "docker.io/library/nginx:latest" -> "nginx"
+            # e.g., "ghcr.io/user/app:v1" -> "app"
+            clean_image_name = full_image_name.split(':')[0]  # Remove tag
+            if '/' in clean_image_name:
+                clean_image_name = clean_image_name.split('/')[-1]  # Take last part after slash
+            
             # Get port mappings
             ports = []
             container_ports = container.ports or {}
@@ -59,6 +70,8 @@ def get_containers():
             container_info = {
                 'Id': container.id,
                 'Names': [container.name],
+                'Image': full_image_name,
+                'ImageName': clean_image_name,  # Clean name for icon lookup
                 'Status': container.status,
                 'Ports': ports
             }
