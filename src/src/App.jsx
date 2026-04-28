@@ -28,11 +28,34 @@ function App() {
     return () => clearInterval(interval)
   }, [])
 
-  const openContainer = (ports) => {
-    if (ports && ports.length > 0) {
-      const port = ports[0].PublicPort
-      const url = `http://ani.local:${port}/`
-      window.open(url, '_blank')
+  const openContainer = (container) => {
+    // Try to find a public port from various possible formats
+    let port = null;
+    
+    if (container.Ports && container.Ports.length > 0) {
+      // Check for PublicPort property
+      const portWithPublic = container.Ports.find(p => p.PublicPort);
+      if (portWithPublic) {
+        port = portWithPublic.PublicPort;
+      }
+    }
+    
+    // If no port found in Ports array, try to extract from HostConfig.PortBindings
+    if (!port && container.HostConfig?.PortBindings) {
+      const bindings = container.HostConfig.PortBindings;
+      for (const [key, value] of Object.entries(bindings)) {
+        if (value && value.length > 0 && value[0].HostPort) {
+          port = parseInt(value[0].HostPort);
+          break;
+        }
+      }
+    }
+    
+    if (port) {
+      const url = `http://ani.local:${port}/`;
+      window.open(url, '_blank');
+    } else {
+      alert('No exposed port found for this container');
     }
   }
 
@@ -61,8 +84,8 @@ function App() {
             <div
               key={container.Id}
               className="container-card"
-              onClick={() => openContainer(container.Ports)}
-              style={{ cursor: container.Ports?.length > 0 ? 'pointer' : 'default' }}
+              onClick={() => openContainer(container)}
+              style={{ cursor: 'pointer' }}
             >
               <div className="container-name">{container.Names[0].replace('/', '')}</div>
               <div className="container-id">{container.Id.substring(0, 12)}</div>
